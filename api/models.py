@@ -17,5 +17,22 @@ class Favourite(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.icecream.icecreamName}"
+    
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    icecream= models.ManyToManyField(IceCream)
+    orderdate = models.DateField(auto_now_add=True) 
+
+class Payment(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    payment_status=models.BooleanField(default=False)
+    def __str__(self):
+        return f"Payment for Order #{self.order.id} - {'Paid' if self.payment_status else 'Pending'}"
+    
+
+
+
+    
+
 
 
